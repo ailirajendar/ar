@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aili Rajender</title>
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial, sans-serif;
+}
+
+body{
+    background:linear-gradient(135deg,#020617,#0f172a,#111827);
+    min-height:100vh;
+    overflow-x:hidden;
+    color:white;
+    position:relative;
+}
+
+/* Mouse Glow */
+
+.cursor-glow{
+    position:fixed;
+    width:250px;
+    height:250px;
+    background:rgba(0,255,255,0.18);
+    border-radius:50%;
+    filter:blur(55px);
+    pointer-events:none;
+    transform:translate(-50%,-50%);
+    z-index:1;
+}
+
+/* Header */
+
+header{
+    text-align:center;
+    padding:40px 20px;
+    position:relative;
+    z-index:2;
+}
+
+header h1{
+    font-size:3rem;
+    color:#00ffff;
+    text-shadow:0 0 20px cyan;
+    letter-spacing:3px;
+}
+
+header p{
+    margin-top:10px;
+    color:#ddd;
+}
+
+/* Gallery */
+
+.gallery{
+    width:90%;
+    margin:auto;
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+    gap:25px;
+    padding-bottom:50px;
+    position:relative;
+    z-index:2;
+}
+
+.card{
+    background:rgba(255,255,255,0.08);
+    border:1px solid rgba(255,255,255,0.1);
+    border-radius:20px;
+    overflow:hidden;
+    backdrop-filter:blur(10px);
+    transition:0.4s;
+    cursor:pointer;
+    box-shadow:0 0 20px rgba(0,255,255,0.1);
+}
+
+.card:hover{
+    transform:scale(1.04);
+    box-shadow:0 0 35px rgba(0,255,255,0.5);
+}
+
+.card img{
+    width:100%;
+    height:320px;
+    object-fit:cover;
+    display:block;
+}
+
+/* Popup */
+
+.popup{
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,0.92);
+    display:none;
+    justify-content:center;
+    align-items:center;
+    z-index:999;
+}
+
+.popup img{
+    max-width:90%;
+    max-height:90%;
+    border-radius:15px;
+    box-shadow:0 0 25px cyan;
+}
+
+.close{
+    position:absolute;
+    top:20px;
+    right:35px;
+    font-size:45px;
+    color:white;
+    cursor:pointer;
+}
+
+/* Footer */
+
+footer{
+    text-align:center;
+    padding:20px;
+    color:#bbb;
+    position:relative;
+    z-index:2;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="cursor-glow"></div>
+
+<!-- Music -->
+<audio id="bgMusic" autoplay loop>
+    <source src="song.mp3" type="audio/mp3">
+</audio>
+
+<!-- Header -->
+<header>
+    <h1>Aili Rajender</h1>
+    <p>Memories • Moments • Legacy</p>
+</header>
+
+<!-- Gallery -->
+<section class="gallery">
+
+    <div class="card">
+        <img src="images/photo1.jpg">
+    </div>
+
+    <div class="card">
+        <img src="images/photo2.jpg">
+    </div>
+
+    <div class="card">
+        <img src="images/photo3.jpg">
+    </div>
+
+    <div class="card">
+        <img src="images/photo4.jpg">
+    </div>
+
+    <div class="card">
+        <img src="images/photo5.jpg">
+    </div>
+
+    <div class="card">
+        <img src="images/photo6.jpg">
+    </div>
+
+</section>
+
+<!-- Popup -->
+<div class="popup" id="popup">
+    <span class="close">&times;</span>
+    <img id="popupImg" src="">
+</div>
+
+<!-- Footer -->
+<footer>
+    <p>Designed for Aili Rajender</p>
+</footer>
+
+<script>
+
+/* Disable Right Click */
+
+window.addEventListener('contextmenu', function(e){
+    e.preventDefault();
+});
+
+/* Disable Copy */
+
+window.addEventListener('copy', function(e){
+    e.preventDefault();
+});
+
+/* Disable Ctrl Keys */
+
+window.addEventListener('keydown', function(e){
+
+    if(
+        e.ctrlKey &&
+        (
+            e.key === 'c' ||
+            e.key === 'u' ||
+            e.key === 's' ||
+            e.key === 'a'
+        )
+    ){
+        e.preventDefault();
+    }
+
+});
+
+/* Mouse Glow */
+
+const glow = document.querySelector('.cursor-glow');
+
+document.addEventListener('mousemove', (e)=>{
+
+    glow.style.left = e.clientX + 'px';
+    glow.style.top = e.clientY + 'px';
+
+});
+
+/* Gallery Popup */
+
+const images = document.querySelectorAll('.card img');
+const popup = document.getElementById('popup');
+const popupImg = document.getElementById('popupImg');
+const closeBtn = document.querySelector('.close');
+
+images.forEach(img=>{
+
+    img.addEventListener('click', ()=>{
+
+        popup.style.display = 'flex';
+        popupImg.src = img.src;
+
+    });
+
+});
+
+closeBtn.addEventListener('click', ()=>{
+
+    popup.style.display = 'none';
+
+});
+
+popup.addEventListener('click', (e)=>{
+
+    if(e.target !== popupImg){
+
+        popup.style.display = 'none';
+
+    }
+
+});
+
+/* Auto Play Music */
+
+window.addEventListener('click', ()=>{
+
+    document.getElementById('bgMusic').play();
+
+});
+
+</script>
+
+</body>
+</html>
